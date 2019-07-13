@@ -10,8 +10,8 @@ import AppNavigator from './navigation/AppNavigator';
 import { withAuthenticator } from 'aws-amplify-react-native';
 
 import Amplify from '@aws-amplify/core';
-import config from './aws-exports';
-Amplify.configure(config);
+/*import config from './aws-exports';
+Amplify.configure(config);*/
 
 class App extends React.Component {
 
@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 }
 
-export default withAuthenticator(App, { includeGreetings: false });
+export default App;
 
 async function loadResourcesAsync() {
   await Promise.all([
