@@ -7,7 +7,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './navigation/AppNavigator';
 
-export default function App(props) {
+import { withAuthenticator } from 'aws-amplify-react-native';
+
+import Amplify from '@aws-amplify/core';
+import config from './aws-exports';
+Amplify.configure(config);
+
+class App extends React.Component {
+
+  render() { 
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
@@ -26,7 +34,10 @@ export default function App(props) {
       </View>
     );
   }
+  }
 }
+
+export default withAuthenticator(App, { includeGreetings: false });
 
 async function loadResourcesAsync() {
   await Promise.all([
