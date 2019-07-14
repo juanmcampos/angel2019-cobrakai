@@ -108,6 +108,7 @@ export default class LoginScreen extends Component {
           inputContainerStyle={{height: 70, borderBottomWidth:0}}
           containerStyle={{backgroundColor:'white', width: '95%', height: 70}}
           onChangeText={(nip) => this.setState({ nip })}
+          secureTextEntry
           value={this.state.nip}
           returnKeyType = "next"
           inputRef={(input) => {

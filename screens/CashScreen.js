@@ -8,6 +8,8 @@ import TouchableScale from 'react-native-touchable-scale';
 
 import { LinearGradient } from 'expo';
 
+import { CreditCardInput, LiteCreditCardInput, CardView } from "react-native-credit-card-input";
+
 import {
   StyleSheet,
   Platform,
@@ -119,7 +121,7 @@ export default class CashScreen extends Component {
   addContact = () => {
     let contactos = this.state.contactos;
     contactos.push({ "nombre": `${this.state.nombre}`, "numero": `${this.state.numero}` });
-    this.setState({ contactos: contactos, nombre: '', numero: '', isAddingContact: false, added: true,  });
+    this.setState({ contactos: contactos, nombre: '', numero: '', isAddingContact: false, added: true, });
   }
 
   handleTransfer = () => {
@@ -269,50 +271,50 @@ export default class CashScreen extends Component {
           <Text style={{ fontSize: 26, marginBottom: 10 }}>Transferencias</Text>
 
           <View>
-          {this.state.contactos.length > 0 ?
+            {this.state.contactos.length > 0 ?
 
-            this.state.contactos.map(({ nombre, numero }, index) =>
-              <ListItem
-                key={index}
-                Component={TouchableScale}
-                friction={90} //
-                tension={100} // These props are passed to the parent component (here TouchableScale)
-                activeScale={0.95} //
-                linearGradientProps={{
-                  colors: ['#FF98CC', '#F44336'],
-                  start: [1, 0],
-                  end: [0.2, 0],
-                }}
-                ViewComponent={LinearGradient} // Only if no expo
-                containerStyle={{ borderRadius: 5, marginBottom: 10 }}
-                title={nombre}
-                titleStyle={{ color: 'white', fontWeight: 'bold' }}
-                subtitleStyle={{ color: 'white' }}
-                subtitle={numero}
-                leftIcon={{ name: 'person', color: 'white' }}
-                onPress={() => this.setState({ isTransferView: false, isSending: true })}
-                chevronColor="white"
-                chevron
-              />)
-            :
-            <Text style={{ marginBottom: 10, fontSize: 30, textAlign: 'center' }}>
-              No hay contactos para transferencias.
+              this.state.contactos.map(({ nombre, numero }, index) =>
+                <ListItem
+                  key={index}
+                  Component={TouchableScale}
+                  friction={90} //
+                  tension={100} // These props are passed to the parent component (here TouchableScale)
+                  activeScale={0.95} //
+                  linearGradientProps={{
+                    colors: ['#FF98CC', '#F44336'],
+                    start: [1, 0],
+                    end: [0.2, 0],
+                  }}
+                  ViewComponent={LinearGradient} // Only if no expo
+                  containerStyle={{ borderRadius: 5, marginBottom: 10 }}
+                  title={nombre}
+                  titleStyle={{ color: 'white', fontWeight: 'bold' }}
+                  subtitleStyle={{ color: 'white' }}
+                  subtitle={numero}
+                  leftIcon={{ name: 'person', color: 'white' }}
+                  onPress={() => this.setState({ isTransferView: false, isSending: true })}
+                  chevronColor="white"
+                  chevron
+                />)
+              :
+              <Text style={{ marginBottom: 10, fontSize: 30, textAlign: 'center' }}>
+                No hay contactos para transferencias.
     </Text>
-          }
+            }
 
-          <Button
-            icon={<Icon name='add' color='#ffffff' />}
-            onPress={() => this.setState({ isTransferView: false, isAddingContact: true })}
-            buttonStyle={{ backgroundColor: 'red', borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
-            title='AGREGAR UN CONTACTO' />
-        </View>
-      
-      <Button icon={<Icon name="close" size={25} color="#FFF" />} buttonStyle={{ backgroundColor: 'red' }} titleStyle={{ color: '#FFF' }} title="Cerrar" type="solid" onPress={() => this.setState({ isTransferView: false })}></Button>
+            <Button
+              icon={<Icon name='add' color='#ffffff' />}
+              onPress={() => this.setState({ isTransferView: false, isAddingContact: true })}
+              buttonStyle={{ backgroundColor: 'red', borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
+              title='AGREGAR UN CONTACTO' />
+          </View>
+
+          <Button icon={<Icon name="close" size={25} color="#FFF" />} buttonStyle={{ backgroundColor: 'red' }} titleStyle={{ color: '#FFF' }} title="Cerrar" type="solid" onPress={() => this.setState({ isTransferView: false })}></Button>
         </View>
 
       </Overlay>
-      
-    
+
+
       {this.addContactView()}
       {this.sendTransferView()}
       <Overlay
@@ -356,18 +358,21 @@ export default class CashScreen extends Component {
 
       </Overlay>
 
-  <View style={styles.statusBar} />
+      <View style={styles.statusBar} />
 
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.iconLeft} onPress={this.handleExitOpen}>
-          <Icon name="close" size={40} color="#000" />
+          <Icon name="close" size={40} color="#000" ></Icon>
+          <Text style={{ color: 'black', fontSize: 18 }} >Salir</Text>
         </TouchableOpacity>
+
       </View>
     </View>
   )
 
   renderContent = () => (
-    <View style={{ display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+    <View style={{ display: 'flex', flex: 1, alignItems: 'center', flexDirection: 'column', justifyContent: 'space-around' }}>
+
       <Button icon={
         <Icon
           name="search"
@@ -403,6 +408,10 @@ export default class CashScreen extends Component {
         titleStyle={{ color: '#FF0000', fontSize: 30 }}
         onPress={() => this.setState({ isTransferView: true })}
       ></Button>
+
+      <CardView brand='ScotiaBank' name='Nombre ' number='XXXX XXXX XXXX 0011' imageFront={require('../assets/images/home-header.png')}></CardView>
+
+
 
     </View>
   )

@@ -32,6 +32,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-app-intro": "^1.1.5",
     "react-native-app-tour": "0.0.19",
+    "react-native-credit-card-input": "^0.4.1",
     "react-native-dropdownalert": "^4.1.0",
     "react-native-elements": "^1.1.0",
     "react-native-parallax-header": "^1.1.3",
