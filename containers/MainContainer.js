@@ -7,6 +7,7 @@ import * as Progress from 'react-native-progress';
 
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import CashScreen from '../screens/CashScreen';
 
 @inject('commonStore')
 @observer
@@ -25,7 +26,7 @@ export default class MainContainer extends Component {
           <Scene key="modal" component={Modal} hideNavBar={true}>
             <Stack key="root">
               <Scene
-                component={HomeScreen}
+                component={CashScreen}
                 hideNavBar={true}
                 initial={!commonStore.token}
                 key="Start"
