@@ -5,9 +5,8 @@ import { View } from 'react-native';
 
 import * as Progress from 'react-native-progress';
 
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
 import CashScreen from '../screens/CashScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 @inject('commonStore')
 @observer
@@ -28,15 +27,15 @@ export default class MainContainer extends Component {
               <Scene
                 component={CashScreen}
                 hideNavBar={true}
-                initial={!commonStore.token}
-                key="Start"
-                title="Start"
+                initial={commonStore.token}
+                key="Cash"
+                title="Cash"
               />
 
               <Scene
-                component={LinksScreen}
+                component={LoginScreen}
                 hideNavBar={true}
-                initial={commonStore.token}
+                initial={!commonStore.token}
                 key="Home"
                 title="Home"
               />

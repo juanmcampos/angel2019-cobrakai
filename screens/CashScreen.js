@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ReactNativeParallaxHeader from 'react-native-parallax-header';
@@ -71,6 +72,8 @@ const styles = StyleSheet.create({
   },
 });
 
+@inject('commonStore')
+@observer
 export default class CashScreen extends Component {
 
   state = {
@@ -105,6 +108,7 @@ export default class CashScreen extends Component {
 
   handleExitOpen = () => {
     this.setState({ exit: true })
+    this.props.commonStore.setToken(null);
   }
 
   handleExitClose = () => {
