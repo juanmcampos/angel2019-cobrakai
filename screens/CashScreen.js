@@ -81,6 +81,7 @@ export default class CashScreen extends Component {
     isVisible: false,
     isAddingContact: false,
     isSending: false,
+    isTransferView: false,
     nombre: '',
     numero: '',
     added: false,
@@ -118,11 +119,11 @@ export default class CashScreen extends Component {
   addContact = () => {
     let contactos = this.state.contactos;
     contactos.push({ "nombre": `${this.state.nombre}`, "numero": `${this.state.numero}` });
-    this.setState({ contactos: contactos, nombre: '', numero: '', isAddingContact: false, added: true });
+    this.setState({ contactos: contactos, nombre: '', numero: '', isAddingContact: false, added: true,  });
   }
 
   handleTransfer = () => {
-    this.setState({otra: "", isSending: false, sent: true, checked: false});
+    this.setState({ otra: "", isSending: false, sent: true, checked: false });
   }
 
   sendTransferView = () => (
@@ -152,7 +153,7 @@ export default class CashScreen extends Component {
               containerStyle={{ borderRadius: 5, marginBottom: 10 }}
               title={`$ ${cantidad}.00`}
               titleStyle={{ color: 'white', fontWeight: 'bold' }}
-              onPress={()=> this.setState({ checked: true, otra: `${cantidad}`})}
+              onPress={() => this.setState({ checked: true, otra: `${cantidad}` })}
               chevronColor="white"
               chevron
             />
@@ -178,6 +179,8 @@ export default class CashScreen extends Component {
 
     </Overlay>
   )
+
+
 
   addContactView = () => (
     <Overlay
@@ -255,6 +258,61 @@ export default class CashScreen extends Component {
       >
         <SCLAlertButton theme="success" onPress={() => this.setState({ sent: false })}>Aceptar</SCLAlertButton>
       </SCLAlert>
+      <Overlay
+        isVisible={this.state.isTransferView}
+        windowBackgroundColor="rgba(0, 0, 0, .3)"
+        overlayBackgroundColor="rgba(255, 255, 255, 1)"
+        onBackdropPress={() => this.setState({ isTransferView: false })}
+        height="65%"
+      >
+        <View style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'stretch', justifyContent: 'space-evenly' }}>
+          <Text style={{ fontSize: 26, marginBottom: 10 }}>Transferencias</Text>
+
+          <View>
+          {this.state.contactos.length > 0 ?
+
+            this.state.contactos.map(({ nombre, numero }, index) =>
+              <ListItem
+                key={index}
+                Component={TouchableScale}
+                friction={90} //
+                tension={100} // These props are passed to the parent component (here TouchableScale)
+                activeScale={0.95} //
+                linearGradientProps={{
+                  colors: ['#FF98CC', '#F44336'],
+                  start: [1, 0],
+                  end: [0.2, 0],
+                }}
+                ViewComponent={LinearGradient} // Only if no expo
+                containerStyle={{ borderRadius: 5, marginBottom: 10 }}
+                title={nombre}
+                titleStyle={{ color: 'white', fontWeight: 'bold' }}
+                subtitleStyle={{ color: 'white' }}
+                subtitle={numero}
+                leftIcon={{ name: 'person', color: 'white' }}
+                onPress={() => this.setState({ isTransferView: false, isSending: true })}
+                chevronColor="white"
+                chevron
+              />)
+            :
+            <Text style={{ marginBottom: 10, fontSize: 30, textAlign: 'center' }}>
+              No hay contactos para transferencias.
+    </Text>
+          }
+
+          <Button
+            icon={<Icon name='add' color='#ffffff' />}
+            onPress={() => this.setState({ isTransferView: false, isAddingContact: true })}
+            buttonStyle={{ backgroundColor: 'red', borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
+            title='AGREGAR UN CONTACTO' />
+        </View>
+      
+      <Button icon={<Icon name="close" size={25} color="#FFF" />} buttonStyle={{ backgroundColor: 'red' }} titleStyle={{ color: '#FFF' }} title="Cerrar" type="solid" onPress={() => this.setState({ isTransferView: false })}></Button>
+        </View>
+
+      </Overlay>
+      
+    
       {this.addContactView()}
       {this.sendTransferView()}
       <Overlay
@@ -297,7 +355,8 @@ export default class CashScreen extends Component {
         </View>
 
       </Overlay>
-      <View style={styles.statusBar} />
+
+  <View style={styles.statusBar} />
 
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.iconLeft} onPress={this.handleExitOpen}>
@@ -327,49 +386,24 @@ export default class CashScreen extends Component {
         onPress={() => this.setState({ isVisible: true })}
       ></Button>
 
+      <Button icon={
+        <Icon
+          name="send"
+          size={40}
+          color="#FF0000"
+        />
+      }
+        Component={TouchableScale}
+        friction={90} //
+        tension={100}
+        activeScale={0.95} //
+        title="Transferencias" type="outline"
+        style={styles.movementsButton}
+        buttonStyle={{ height: 140, borderColor: '#FF0000', borderWidth: 2 }}
+        titleStyle={{ color: '#FF0000', fontSize: 30 }}
+        onPress={() => this.setState({ isTransferView: true })}
+      ></Button>
 
-      <Card
-        title='TRANSFERENCIAS'
-      >
-        <View>
-          {this.state.contactos.length > 0 ?
-
-            this.state.contactos.map(({ nombre, numero }, index) =>
-              <ListItem
-                key={index}
-                Component={TouchableScale}
-                friction={90} //
-                tension={100} // These props are passed to the parent component (here TouchableScale)
-                activeScale={0.95} //
-                linearGradientProps={{
-                  colors: ['#FF98CC', '#F44336'],
-                  start: [1, 0],
-                  end: [0.2, 0],
-                }}
-                ViewComponent={LinearGradient} // Only if no expo
-                containerStyle={{ borderRadius: 5, marginBottom: 10 }}
-                title={nombre}
-                titleStyle={{ color: 'white', fontWeight: 'bold' }}
-                subtitleStyle={{ color: 'white' }}
-                subtitle={numero}
-                leftIcon={{ name: 'person', color: 'white' }}
-                onPress={() => this.setState({ isSending: true })}
-                chevronColor="white"
-                chevron
-              />)
-            :
-            <Text style={{ marginBottom: 10, fontSize: 30, textAlign: 'center' }}>
-              No hay contactos para transferencias.
-    </Text>
-          }
-
-          <Button
-            icon={<Icon name='add' color='#ffffff' />}
-            onPress={() => this.setState({ isAddingContact: true })}
-            buttonStyle={{ backgroundColor: 'red', borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
-            title='AGREGAR UN CONTACTO' />
-        </View>
-      </Card>
     </View>
   )
 
@@ -381,7 +415,13 @@ export default class CashScreen extends Component {
           headerMaxHeight={250}
           extraScrollHeight={20}
           navbarColor="#FF0000"
-          title="$ 100, 000. 00"
+          title={<View style={{ display: 'flex', alignItems: 'center' }}>
+
+            <Text style={styles.titleStyle}>$ 100,000.00</Text>
+            <Text style={{
+              ...styles.titleStyle, fontSize: 18
+            }}>SALDO DISPONIBLE</Text>
+          </View>}
           titleStyle={styles.titleStyle}
           backgroundImage={images.background}
           backgroundImageScale={1.2}
