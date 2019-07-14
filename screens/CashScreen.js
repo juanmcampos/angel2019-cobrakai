@@ -299,7 +299,6 @@ export default class CashScreen extends Component {
         <TouchableOpacity style={styles.iconLeft} onPress={this.handleExitOpen}>
           <Icon name="close" size={40} color="#000" />
         </TouchableOpacity>
-
       </View>
     </View>
   )
