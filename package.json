@@ -19,7 +19,7 @@
     "autobind-decorator": "^2.4.0",
     "aws-amplify": "^1.1.30",
     "aws-amplify-react-native": "^2.1.14",
-    "expo": "^33.0.0",
+    "expo": "^48.0.0",
     "expo-asset": "^5.0.0",
     "expo-constants": "^5.0.0",
     "expo-font": "^5.0.0",
